@@ -40,7 +40,7 @@ Os artigos são gerados no build. Em produção, faça um novo build/deploy apó
 
 ## Ativar os comentários Giscus
 
-O repositório `kalecio/blog` é público, mas Discussions estava desabilitado na verificação inicial. O identificador do repositório já está preenchido em `.env.example`; faltam a ativação do Giscus e a categoria.
+O Giscus está configurado para `kalecio/blog`, na categoria `Announcements` (`DIC_kwDOVdsM484DKDUi`). Os identificadores públicos estão preenchidos em `.env.example` e como padrão no workflow de produção. Para usar a mesma configuração localmente, copie `.env.example` para `.env.local`.
 
 1. Use um repositório **público** no GitHub e habilite Discussions nas configurações.
 2. Instale o aplicativo Giscus nesse repositório.
@@ -56,7 +56,7 @@ NEXT_PUBLIC_GISCUS_CATEGORY_ID=ID_DA_CATEGORIA
 
 Reinicie o servidor local. Na hospedagem, configure as mesmas variáveis antes de gerar o build. Esses identificadores são públicos, não são tokens. Nunca adicione tokens GitHub.
 
-Cada artigo usa seu slug (`posts/meu-artigo`) como identificador estável da discussão. Mudar o título não troca os comentários; mudar o nome do arquivo troca o identificador. O tema é claro e a interface de comentários usa português. Sem configuração completa, o blog mostra uma mensagem discreta e não carrega o script externo. A autenticação e os comentários são gerenciados pelo Giscus/GitHub.
+Cada artigo usa o caminho da página (`/posts/meu-artigo`) para encontrar a discussão, conforme o configurador do Giscus. Mudar o título não troca os comentários; mudar o nome do arquivo troca o caminho. O tema é claro para acompanhar o blog, a interface usa português e a caixa de comentários fica abaixo da conversa. Sem configuração completa, o blog mostra uma mensagem discreta e não carrega o script externo. A autenticação e os comentários são gerenciados pelo Giscus/GitHub.
 
 ## Deploy automático · Cloudflare Pages
 
@@ -67,7 +67,7 @@ O workflow `.github/workflows/deploy.yml` publica o blog em cada push na `main`,
 1. Na conta Cloudflare, crie um projeto Pages de **Direct Upload** chamado `kalecio-blog`, com branch de produção `main`. Você pode criá-lo uma vez pelo terminal autenticado com `pnpm dlx wrangler@4 pages project create kalecio-blog --production-branch=main`. Não é necessário conectar o GitHub na Cloudflare: a publicação é feita pelo Actions.
 2. Crie um API token Cloudflare com permissão **Account → Cloudflare Pages → Edit**, restrito à conta do projeto. Copie também o **Account ID** dessa conta.
 3. No repositório GitHub, em **Settings → Secrets and variables → Actions → Secrets**, cadastre `CLOUDFLARE_API_TOKEN` e `CLOUDFLARE_ACCOUNT_ID`. Não coloque o token nos arquivos do repositório.
-4. Para ativar o Giscus no build de produção, cadastre em **Actions → Variables**: `NEXT_PUBLIC_GISCUS_CATEGORY` e `NEXT_PUBLIC_GISCUS_CATEGORY_ID`. As variáveis `NEXT_PUBLIC_GISCUS_REPO` e `NEXT_PUBLIC_GISCUS_REPO_ID` são opcionais; o workflow já usa os valores deste repositório como padrão. Variáveis de build do painel Pages não são usadas pelo build que roda no GitHub.
+4. O workflow já inclui os quatro identificadores públicos do Giscus. Para substituir a configuração, cadastre em **Actions → Variables**: `NEXT_PUBLIC_GISCUS_REPO`, `NEXT_PUBLIC_GISCUS_REPO_ID`, `NEXT_PUBLIC_GISCUS_CATEGORY` e `NEXT_PUBLIC_GISCUS_CATEGORY_ID`. Variáveis de build do painel Pages não são usadas pelo build que roda no GitHub.
 5. Envie o código e este workflow para a `main` ou faça merge de um PR. Acompanhe a execução em **Actions → Deploy to Cloudflare Pages**.
 
 O workflow usa o ambiente GitHub `production`. Caso ele tenha revisores obrigatórios, será necessária a aprovação definida pelo próprio ambiente antes de cada execução.

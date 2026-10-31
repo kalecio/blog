@@ -30,7 +30,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       <div className="prose"><Markdown remarkPlugins={[remarkGfm]}>{post.content}</Markdown></div>
       <div className="article-signoff">✳<span>Obrigado pela leitura.</span></div>
     </article>
-    <Comments key={slug} slug={slug} config={{ repo: process.env.NEXT_PUBLIC_GISCUS_REPO ?? "", repoId: process.env.NEXT_PUBLIC_GISCUS_REPO_ID ?? "", category: process.env.NEXT_PUBLIC_GISCUS_CATEGORY ?? "", categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID ?? "" }} />
+    <Comments key={slug} config={{ repo: process.env.NEXT_PUBLIC_GISCUS_REPO ?? "", repoId: process.env.NEXT_PUBLIC_GISCUS_REPO_ID ?? "", category: process.env.NEXT_PUBLIC_GISCUS_CATEGORY ?? "", categoryId: process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID ?? "" }} />
     {next && <Link className="next-post" href={`/posts/${next.slug}`}><span className="eyebrow">CONTINUE EXPLORANDO</span><span>{next.title} ↗</span></Link>}
   </main>;
 }
