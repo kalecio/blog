@@ -16,17 +16,14 @@ export function LanguageSelector({ locale, links: homeLinks, availablePosts }: {
     setAutomatic(!saved);
     // Negotiate language only at the entry URL. Explicit localized URLs and article links stay stable.
     if (window.location.pathname !== "/") return;
-    const explicit = new URLSearchParams(window.location.search).get("lang");
-    if (explicit === "pt") return;
     const target = locales.includes(saved as Locale) ? saved as Locale : browserLocale(navigator.languages?.length ? navigator.languages : [navigator.language]);
-    if (target !== locale && links[target]) window.location.replace(links[target] + window.location.search + window.location.hash);
+    if (links[target] && links[target] !== window.location.pathname) window.location.replace(links[target] + window.location.search + window.location.hash);
   }, [locale, links]);
   function choose(value: string) {
     const target = value === "auto" ? browserLocale(navigator.languages?.length ? navigator.languages : [navigator.language]) : value as Locale;
     try { if (value === "auto") localStorage.removeItem(preferenceKey); else localStorage.setItem(preferenceKey, target); } catch { /* Navigation still works without storage. */ }
     setAutomatic(value === "auto");
-    const destination = links[target] ?? (target === "pt" ? "/" : `/${target}`);
-    window.location.assign(destination === "/" && value !== "auto" ? "/?lang=pt" : destination);
+    window.location.assign(links[target] ?? `/${target}`);
   }
   return <div className="language-control"><label htmlFor={id}>{messages[locale].language}</label><select id={id} aria-label={messages[locale].language} value={automatic ? "auto" : locale} onChange={(event) => choose(event.target.value)}><option value="auto">{messages[locale].automatic}</option>{locales.filter((item) => links[item]).map((item) => <option key={item} value={item} lang={languageTags[item]}>{languageNames[item]}</option>)}</select><div className="language-links" aria-label={messages[locale].language}>{locales.filter((item) => links[item]).map((item) => <a key={item} href={links[item]} hrefLang={languageTags[item]} lang={languageTags[item]} aria-current={item === locale ? "page" : undefined} onClick={(event) => { if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return; event.preventDefault(); choose(item); }}>{languageNames[item]}</a>)}</div></div>;
 }

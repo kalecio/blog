@@ -13,7 +13,7 @@ test("browser language selection honors preference order and regional language t
   assert.equal(browserLocale([]), "pt");
 });
 test("locale URLs preserve existing Portuguese routes and the article identifier", () => {
-  assert.equal(homePath("pt"), "/");
+  assert.equal(homePath("pt"), "/pt");
   assert.equal(homePath("en"), "/en");
   assert.equal(homePath("es"), "/es");
   assert.equal(postPath("pt", "my-post"), "/posts/my-post");

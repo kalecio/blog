@@ -3,7 +3,7 @@ export type Locale = typeof locales[number];
 export const languageTags = { pt: "pt-BR", en: "en", es: "es" } as const;
 export const ogLocales = { pt: "pt_BR", en: "en_US", es: "es_ES" } as const;
 export const languageNames = { pt: "Português", en: "English", es: "Español" } as const;
-export const homePath = (locale: Locale) => locale === "pt" ? "/" : `/${locale}`;
+export const homePath = (locale: Locale) => `/${locale}`;
 export const postPath = (locale: Locale, slug: string) => `${locale === "pt" ? "" : `/${locale}`}/posts/${slug}`;
 export const messages = {
   pt: {

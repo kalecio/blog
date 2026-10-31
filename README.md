@@ -40,7 +40,7 @@ Os artigos são gerados no build. Em produção, faça um novo build/deploy apó
 
 ## Idiomas e conteúdo traduzido
 
-Português mantém os endereços originais (`/` e `/posts/meu-artigo`). Inglês usa `/en` e `/en/posts/meu-artigo`; espanhol usa `/es` e `/es/posts/meu-artigo`. As três versões são HTML estático completo, com o atributo `lang` correto, títulos, resumos, textos, datas e navegação no idioma correspondente.
+A entrada `/` detecta o idioma e encaminha para uma versão estável. Português usa `/pt` e mantém os endereços originais dos artigos (`/posts/meu-artigo`). Inglês usa `/en` e `/en/posts/meu-artigo`; espanhol usa `/es` e `/es/posts/meu-artigo`. As três versões são HTML estático completo, com o atributo `lang` correto, títulos, resumos, textos, datas e navegação no idioma correspondente.
 
 - Português: `content/posts/meu-artigo.md`.
 - Inglês: `content/posts/en/meu-artigo.md`.
@@ -48,7 +48,7 @@ Português mantém os endereços originais (`/` e `/posts/meu-artigo`). Inglês 
 
 Use o mesmo nome de arquivo para conectar as traduções. Traduza também `title`, `description` e `tags`. Uma tradução ausente ou com `draft: true` não aparece no seletor do artigo nem nos seus `hreflang`; não há tradução automática em tempo real. O campo opcional `updated: "AAAA-MM-DD"` registra uma atualização real, posterior à publicação, e alimenta o sitemap e os metadados do artigo.
 
-Ao abrir `/`, o blog usa primeiro a preferência salva no seletor; sem preferência, percorre `navigator.languages` e escolhe o primeiro idioma suportado (`pt`, `en` ou `es`). Português é o fallback. A opção **Automático** limpa a preferência e volta ao idioma do navegador. Links diretos `/en`, `/es` e de artigos não são redirecionados automaticamente. A seleção manual de português na entrada também funciona sem armazenamento local via `?lang=pt`, cuja URL canônica continua sendo `/`. Sem JavaScript, o HTML em português e os links normais para outros idiomas continuam disponíveis.
+Ao abrir `/`, o blog usa primeiro a preferência salva no seletor; sem preferência, percorre `navigator.languages` e escolhe o primeiro idioma suportado (`pt`, `en` ou `es`). Português é o fallback. A opção **Automático** limpa a preferência e volta ao idioma do navegador. Links diretos `/pt`, `/en`, `/es` e de artigos não são redirecionados automaticamente. A escolha manual usa endereços estáveis mesmo quando o armazenamento local está bloqueado. Sem JavaScript, a entrada exibe links normais para as três versões, que continuam disponíveis como HTML completo. A entrada é marcada com `hreflang="x-default"`; o sitemap lista as versões com idioma definido.
 
 ## SEO e ligação com kalec.io
 
