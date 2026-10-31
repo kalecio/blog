@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <div className="shell">
       <header className="site-header">
         <Link className="wordmark" href="/" aria-label="kalec.io, início">kalec<span>.io</span><span className="brand-dot">✳</span></Link>
-        <nav aria-label="Navegação principal"><Link href="/">O blog <span aria-hidden="true">↗</span></Link></nav>
+        <nav aria-label="Navegação principal"><Link href="/">O blog</Link><a href="https://kalec.io">kalec.io <span aria-hidden="true">↗</span></a></nav>
       </header>
       {children}
       <footer className="site-footer"><span>kalec.io <span className="footer-divider">/</span> Feito de ideias.</span><span>Menos ruído, mais significado.</span></footer>

@@ -14,7 +14,8 @@ button, a, input { -webkit-tap-highlight-color: transparent; }
 .wordmark { display: inline-flex; align-items: center; font-size: 24px; letter-spacing: -1.2px; font-weight: 700; }
 .wordmark > span:first-child { color: var(--muted); font-weight: 400; }
 .brand-dot { color: var(--green); font-size: 25px; margin-left: 14px; }
-nav a { font-size: 13px; } nav a span { margin-left: 12px; color: var(--green); }
+nav { display: flex; align-items: center; gap: 24px; }
+nav a { font-size: 13px; } nav a span { margin-left: 8px; color: var(--green); }
 .intro { padding: 86px 0 78px; }
 .eyebrow { font-family: "Courier New", monospace; font-size: 10px; line-height: 1.5; letter-spacing: 1.7px; color: var(--muted); display: flex; align-items: center; gap: 9px; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
