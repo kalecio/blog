@@ -1,6 +1,6 @@
 # kalec.io · Blog
 
-Blog minimalista em português, feito com Next.js, React e TypeScript. Posts em Markdown, busca sem distinção de acentos, filtros por tags, tempo de leitura e comentários pelo Giscus.
+Blog minimalista em português, inglês e espanhol, feito com Next.js, React e TypeScript. Posts em Markdown, busca sem distinção de acentos, filtros por tags, tempo de leitura e comentários pelo Giscus.
 
 ## Rodar localmente
 
@@ -38,6 +38,26 @@ Adicione imagens em `public/images` e referencie-as com `![Descrição da imagem
 
 Os artigos são gerados no build. Em produção, faça um novo build/deploy após alterar os arquivos Markdown.
 
+## Idiomas e conteúdo traduzido
+
+Português mantém os endereços originais (`/` e `/posts/meu-artigo`). Inglês usa `/en` e `/en/posts/meu-artigo`; espanhol usa `/es` e `/es/posts/meu-artigo`. As três versões são HTML estático completo, com o atributo `lang` correto, títulos, resumos, textos, datas e navegação no idioma correspondente.
+
+- Português: `content/posts/meu-artigo.md`.
+- Inglês: `content/posts/en/meu-artigo.md`.
+- Espanhol: `content/posts/es/meu-artigo.md`.
+
+Use o mesmo nome de arquivo para conectar as traduções. Traduza também `title`, `description` e `tags`. Uma tradução ausente ou com `draft: true` não aparece no seletor do artigo nem nos seus `hreflang`; não há tradução automática em tempo real. O campo opcional `updated: "AAAA-MM-DD"` registra uma atualização real, posterior à publicação, e alimenta o sitemap e os metadados do artigo.
+
+Ao abrir `/`, o blog usa primeiro a preferência salva no seletor; sem preferência, percorre `navigator.languages` e escolhe o primeiro idioma suportado (`pt`, `en` ou `es`). Português é o fallback. A opção **Automático** limpa a preferência e volta ao idioma do navegador. Links diretos `/en`, `/es` e de artigos não são redirecionados automaticamente. A seleção manual de português na entrada também funciona sem armazenamento local via `?lang=pt`, cuja URL canônica continua sendo `/`. Sem JavaScript, o HTML em português e os links normais para outros idiomas continuam disponíveis.
+
+## SEO e ligação com kalec.io
+
+Cada página tem URL canônica própria, alternâncias `hreflang` recíprocas para traduções existentes e metadados Open Graph/Twitter. `/sitemap.xml` lista as páginas publicadas; `/robots.txt` informa o sitemap; `/social-card.png` entrega a imagem PNG de compartilhamento. As páginas 404 não são indexáveis.
+
+Os dados estruturados usam `Blog`, `BlogPosting`, `Organization` e `BreadcrumbList`, com autor/editor `kalec.io` e links para `https://kalec.io`. A autoria e a apresentação dos serviços também são visíveis na página. As páginas do blog têm suas próprias canônicas: apontá-las todas para o site principal prejudicaria a indexação dos artigos.
+
+Essa base técnica ajuda os buscadores a entenderem o conteúdo e a relação entre o blog e o site. Ganhos de posicionamento dependem também da qualidade e relevância dos artigos e de links externos; os textos iniciais continuam sendo exemplos editáveis. Cadastre o sitemap no Google Search Console usando uma propriedade que cubra `blog.kalec.io` (por exemplo, a propriedade de domínio `kalec.io`).
+
 ## Ativar os comentários Giscus
 
 O Giscus está configurado para `kalecio/blog`, na categoria `Announcements` (`DIC_kwDOVdsM484DKDUi`). Os identificadores públicos estão preenchidos em `.env.example` e como padrão no workflow de produção. Para usar a mesma configuração localmente, copie `.env.example` para `.env.local`.
@@ -56,7 +76,7 @@ NEXT_PUBLIC_GISCUS_CATEGORY_ID=ID_DA_CATEGORIA
 
 Reinicie o servidor local. Na hospedagem, configure as mesmas variáveis antes de gerar o build. Esses identificadores são públicos, não são tokens. Nunca adicione tokens GitHub.
 
-Cada artigo usa o caminho da página (`/posts/meu-artigo`) para encontrar a discussão, conforme o configurador do Giscus. Mudar o título não troca os comentários; mudar o nome do arquivo troca o caminho. O tema é claro para acompanhar o blog, a interface usa português e a caixa de comentários fica abaixo da conversa. Sem configuração completa, o blog mostra uma mensagem discreta e não carrega o script externo. A autenticação e os comentários são gerenciados pelo Giscus/GitHub.
+Cada artigo usa um termo estável (`posts/meu-artigo`) para encontrar a discussão. Esse termo preserva o identificador do mapeamento anterior por pathname e compartilha os comentários entre traduções. Mudar o título não troca os comentários; mudar o nome do arquivo troca o identificador. O tema é claro para acompanhar o blog, a interface acompanha o idioma da página e a caixa de comentários fica abaixo da conversa. Sem configuração completa, o blog mostra uma mensagem discreta e não carrega o script externo. A autenticação e os comentários são gerenciados pelo Giscus/GitHub.
 
 ## Deploy automático · Cloudflare Pages
 
@@ -87,4 +107,6 @@ Referências: [deploy com GitHub Actions](https://developers.cloudflare.com/page
 ```sh
 pnpm exec tsc --noEmit
 pnpm build
+pnpm check:seo
+pnpm test
 ```

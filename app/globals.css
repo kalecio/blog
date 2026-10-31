@@ -79,3 +79,28 @@ h1 em { font-weight: 400; color: var(--green); }
   .site-footer { flex-direction: column; gap: 10px; }.end-note { margin-bottom: 55px; font-size: 11px; }.reading-page { padding-top: 30px; }.article-header { margin-top: 38px; }.prose { font-size: 17px; }.article-description { font-size: 15px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; } }
+
+/* Language navigation and the connection to the main kalec.io website. */
+.language-control { display: flex; align-items: center; gap: 7px; position: relative; }
+.language-control > label { font-size: 11px; color: var(--muted); }
+.language-control select { max-width: 125px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 7px; font-size: 12px; cursor: pointer; }
+.language-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.language-links a { font-size: 10px; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; }
+.language-links a[aria-current="page"] { color: var(--green); font-weight: bold; }
+.article-tools { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.about-kalec { border-top: 1px solid var(--line); padding: 36px 0; margin-top: 30px; }
+.about-kalec h2 { font: 28px/1.3 Georgia, serif; margin: 12px 0; }
+.about-kalec p:not(.eyebrow) { max-width: 600px; font-size: 14px; line-height: 1.8; color: var(--muted); }
+.about-kalec a { display: inline-block; margin-top: 15px; color: var(--green); font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.post-meta a { text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 700px) {
+  .site-header { flex-wrap: wrap; height: auto; min-height: 95px; gap: 20px; padding: 25px 0; }
+  .site-header nav { flex-wrap: wrap; gap: 14px; }
+  .language-control { flex-wrap: wrap; }
+  .article-tools { align-items: flex-start; flex-direction: column; }
+  .site-footer { flex-wrap: wrap; }
+}
+.site-header .language-control { flex-wrap: wrap; max-width: 145px; }
+.site-header .language-links { width: 100%; justify-content: flex-end; gap: 8px; }
+.site-header .language-links a { font-size: 9px; }
+@media (max-width: 600px) { .site-header nav { width: 100%; justify-content: space-between; }.site-header .language-links { justify-content: flex-start; } }

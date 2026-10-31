@@ -40,6 +40,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Test language selection
+        run: pnpm test
+
       - name: Build static site
         run: pnpm build
         env:
@@ -47,6 +50,9 @@ jobs:
           NEXT_PUBLIC_GISCUS_REPO_ID: ${{ vars.NEXT_PUBLIC_GISCUS_REPO_ID || 'R_kgDOVdsM4w' }}
           NEXT_PUBLIC_GISCUS_CATEGORY: ${{ vars.NEXT_PUBLIC_GISCUS_CATEGORY || 'Announcements' }}
           NEXT_PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.NEXT_PUBLIC_GISCUS_CATEGORY_ID || 'DIC_kwDOVdsM484DKDUi' }}
+
+      - name: Check exported SEO
+        run: pnpm check:seo
 
       - name: Validate deployment configuration
         env:
