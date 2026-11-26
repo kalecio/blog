@@ -104,9 +104,17 @@ Referências: [deploy com GitHub Actions](https://developers.cloudflare.com/page
 
 ## Verificação
 
+O workflow `.github/workflows/pull-request.yml` executa lint, TypeScript, testes unitários, build estático e verificação de SEO em cada pull request, inclusive de forks. Ele usa apenas permissão de leitura, não acessa o ambiente `production`, não precisa de secrets e não publica o site. Novos commits cancelam a validação anterior do mesmo PR. Para impedir merges sem validação, configure o check **Validate pull request** como obrigatório nas regras de proteção da `main`.
+
+Para executar as mesmas verificações localmente, use Node.js 24 e a versão de pnpm indicada em `package.json`:
+
 ```sh
-pnpm exec tsc --noEmit
+pnpm install --frozen-lockfile
+pnpm lint
+pnpm typecheck
+pnpm test
 pnpm build
 pnpm check:seo
-pnpm test
 ```
+
+`pnpm typecheck` gera os tipos de rotas do Next.js antes de executar o TypeScript, inclusive em um checkout novo. A verificação de SEO precisa do diretório `out` gerado pelo build.
