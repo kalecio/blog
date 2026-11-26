@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { languageTags, locales, type Locale } from "./i18n";
+import { isPublishedPost } from "./publishing";
 
 export type Post = { slug: string; title: string; description: string; date: string; updated?: string; tags: string[]; readingTime: number; content: string };
 
@@ -10,7 +11,7 @@ export function getPosts(locale: Locale = "pt"): Post[] {
   if (!fs.existsSync(directory)) return [];
   return fs.readdirSync(directory).filter((file) => /^[a-z0-9]+(?:-[a-z0-9]+)*\.md$/.test(file)).flatMap((file) => {
     const { data, content } = matter(fs.readFileSync(path.join(directory, file), "utf8"));
-    if (data.draft === true) return [];
+    if (!isPublishedPost(data)) return [];
     const date = data.date instanceof Date ? data.date.toISOString().slice(0, 10) : data.date;
     if (typeof data.title !== "string" || !data.title.trim() || typeof data.description !== "string" || typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date) || Number.isNaN(Date.parse(date)) || new Date(date).toISOString().slice(0, 10) !== date || !Array.isArray(data.tags) || !data.tags.every((tag: unknown) => typeof tag === "string")) {
       throw new Error(`Metadados inválidos em ${file}. Use title, description, date (AAAA-MM-DD) e tags (lista de textos).`);
